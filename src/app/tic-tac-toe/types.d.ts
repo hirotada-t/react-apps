@@ -1,1 +1,2 @@
-export type GameResultArr = (1 | 0)[];
+export type GameCell = 1 | 0;
+export type GameResultArr = GameCell[];
