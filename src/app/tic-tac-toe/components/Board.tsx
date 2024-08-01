@@ -2,7 +2,9 @@ import { PLAYERS } from "../constant";
 import { GameResultArr } from "../types";
 import Square from "./Square";
 
-export default function Board({ game }: Readonly<{ game: GameResultArr }>) {
+export default function Board(
+    { game, onPlay }: Readonly<{ game: GameResultArr, onPlay: (index:number) => void }>
+) {
     return (
         <div>
             <pre>{game}</pre>
@@ -14,7 +16,7 @@ export default function Board({ game }: Readonly<{ game: GameResultArr }>) {
                 {[...Array(9)].map((_, index) => {
                     const cell = PLAYERS[game[index]] || '';
                     return (
-                        <Square cell={cell} />
+                        <Square cell={cell} key={index} onCellClick={()=>onPlay(index)} />
                     )
                 })}
             </div>

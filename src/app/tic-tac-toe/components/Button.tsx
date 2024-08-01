@@ -5,7 +5,7 @@ export default function Button({
     disabled
 }: Readonly<{
     className: string,
-    onClick: () => void,
+    onClick: (value:any) => void,
     children: string,
     disabled?: boolean
 }>) {

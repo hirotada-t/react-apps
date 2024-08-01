@@ -9,10 +9,14 @@ export default function Home() {
   const [game, setGame] = useState<GameResultArr>([1, 0, 1, 0, 0]);
   const [history, setHistory] = useState<GameResultArr[]>([]);
 
+  const handleGamePlay = (index: number) => {
+    alert(`You clicked on cell ${index}`);
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center px-10 sm:px-24">
       <div className="bg-white w-full rounded-lg text-black max-w-xl p-5 sm:flex sm:gap-10">
-        <Board game={game} />
+        <Board game={game} onPlay={ handleGamePlay } />
         <div className="flex justify-center border-t sm:border-none py-3 sm:py-0">
           <ol className="list-decimal">
             <li className="mb-1">
