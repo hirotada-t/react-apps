@@ -7,27 +7,31 @@ type cellSize = {
   height: string;
 } | {};
 
-export default function Square({ cell, className }: Readonly<{ cell: string, className:string }>) {
-  const [cellSize, setCellSize] = useState<cellSize>({});
+export default function Square({ className }: Readonly<{className:string }>) {
+  const [cellStyle, setCellStyle] = useState<cellSize>({});
+  const [disabled, setDisabled] = useState<boolean>(false);
+  const [cell, setCell] = useState<string>('');
 
-  const disabled = cell !== '';
   const cellElm = useRef<HTMLButtonElement>(null);
+  const turn = useSelector((state: { ticTacToe: { turn: number } }) => state.ticTacToe.turn);
 
   const onCellClick = () => {
+    setDisabled(true);
+    setCell(turn % 2 === 0 ? 'X' : 'O');
     store.dispatch({ type: 'ticTacToe/updateGame', payload: cell });
   }
 
   useEffect(() => {
-    console.log(cellElm.current?.clientWidth);
     const width = '100%';
     const height = cellElm.current?.clientWidth + 'px';
-    setCellSize({ width, height });
+    const fontSize = (cellElm.current?.clientWidth || 0) / 2 + 'px';
+    setCellStyle({ width, height, fontSize });
   }, []);
 
   return (
     <button
       onClick={onCellClick}
-      style={cellSize}
+      style={cellStyle}
       disabled={disabled}
       ref={cellElm}
       className={className}

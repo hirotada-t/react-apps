@@ -4,9 +4,9 @@ import { GameResultArr } from "./types";
 const ticTacToeSlice = createSlice({
   name: "ticTacToe",
   initialState: {
-    game: <GameResultArr>Array(9).fill(null),
+    game: <GameResultArr>Array(25).fill(null),
     turn: 0,
-    boardSize: 3,
+    boardSize: 5,
     history: <GameResultArr[]>[],
   },
   reducers: {
@@ -21,7 +21,6 @@ const ticTacToeSlice = createSlice({
       state.turn = turn + 1;
       state.game = game;
       state.history = [...history, game];
-
     },
   },
 });

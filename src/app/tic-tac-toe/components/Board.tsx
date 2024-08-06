@@ -30,10 +30,9 @@ export default function Board() {
           const border_b = i === boardSize - 1 ? '' : 'border-b';
           return (
             <div className={`${border_b} border-gray-400 grid grid-cols-${boardSize}`} key={i}>
-              {cols.map((data, j) => {
-                const cell = data === null ? '' : PLAYERS[data];
+              {cols.map((_, j) => {
                 const border_r = j === boardSize - 1 ? '' : 'border-r';
-                return <Square cell={cell} key={j} className={`${border_r} border-gray-400 w-full`} />
+                return <Square key={j} className={`${border_r} border-gray-400 w-full`} />
               })}
             </div>
           )
