@@ -7,11 +7,10 @@ type cellSize = {
   height: string;
 } | {};
 
-export default function Square({ cell }: Readonly<{ cell: string }>) {
+export default function Square({ cell, className }: Readonly<{ cell: string, className:string }>) {
   const [cellSize, setCellSize] = useState<cellSize>({});
 
   const disabled = cell !== '';
-  const boardSize = useSelector((state: { ticTacToe: { boardSize: number } }) => state.ticTacToe.boardSize);
   const cellElm = useRef<HTMLButtonElement>(null);
 
   const onCellClick = () => {
@@ -19,6 +18,7 @@ export default function Square({ cell }: Readonly<{ cell: string }>) {
   }
 
   useEffect(() => {
+    console.log(cellElm.current?.clientWidth);
     const width = '100%';
     const height = cellElm.current?.clientWidth + 'px';
     setCellSize({ width, height });
@@ -27,10 +27,10 @@ export default function Square({ cell }: Readonly<{ cell: string }>) {
   return (
     <button
       onClick={onCellClick}
-      className="border border-gray-400"
       style={cellSize}
       disabled={disabled}
       ref={cellElm}
+      className={className}
     >
       {cell}
     </button>

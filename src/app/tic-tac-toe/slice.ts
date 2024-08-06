@@ -6,7 +6,7 @@ const ticTacToeSlice = createSlice({
   initialState: {
     game: <GameResultArr>Array(9).fill(null),
     turn: 0,
-    boardSize: 4,
+    boardSize: 3,
     history: <GameResultArr[]>[],
   },
   reducers: {
@@ -19,7 +19,6 @@ const ticTacToeSlice = createSlice({
       const history = state.history.slice();
 
       state.turn = turn + 1;
-      game[action.payload] = turn % 2;
       state.game = game;
       state.history = [...history, game];
 

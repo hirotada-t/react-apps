@@ -1,11 +1,12 @@
 import { useSelector } from "react-redux";
 import { PLAYERS } from "../constant";
-import { GameResultArr } from "../types";
+import { GameCell, GameResultArr } from "../types";
 import Square from "./Square";
 import { useEffect, useState } from "react";
 
 export default function Board() {
   const [loading, setLoading] = useState(true);
+  const [gameArea, setGameArea] = useState<GameCell[][]>([]);
 
   const game = useSelector((state: { ticTacToe: { game: GameResultArr } }) => state.ticTacToe.game);
   const turn = useSelector((state: { ticTacToe: { turn: number } }) => state.ticTacToe.turn);
@@ -13,21 +14,28 @@ export default function Board() {
   const currPlayer = PLAYERS[turn % 2];
 
   useEffect(() => {
+    const array = game.flatMap((_, i, arr) => (i % boardSize === 0 ? [arr.slice(i, i + boardSize)] : []));
+    setGameArea(array);
     setLoading(false);
-  }, []);
+  }, [boardSize, game]);
 
   return (
     <div>
       <p className="mb-3">
         Next player: {currPlayer}
       </p>
-      <div className={`grid grid-cols-${boardSize} min-h-80 font-bold mx-auto mb-3`}>
+      <div className={`min-h-80 font-bold mx-auto mb-3 border border-gray-400`}>
         {loading && <div>Loading...</div>}
-        {[...Array(boardSize ** 2)].map((_, index) => {
-          const cell = game[index] === null ? '' : PLAYERS[game[index]];
-          if (loading) return;
+        {gameArea.map((cols, i) => {
+          const border_b = i === boardSize - 1 ? '' : 'border-b';
           return (
-            <Square cell={cell} key={index} />
+            <div className={`${border_b} border-gray-400 grid grid-cols-${boardSize}`} key={i}>
+              {cols.map((data, j) => {
+                const cell = data === null ? '' : PLAYERS[data];
+                const border_r = j === boardSize - 1 ? '' : 'border-r';
+                return <Square cell={cell} key={j} className={`${border_r} border-gray-400 w-full`} />
+              })}
+            </div>
           )
         })}
       </div>
