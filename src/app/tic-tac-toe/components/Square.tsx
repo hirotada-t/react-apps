@@ -7,7 +7,7 @@ type cellSize = {
   height: string;
 } | {};
 
-export default function Square({ className }: Readonly<{className:string }>) {
+export default function Square({ className, index }: Readonly<{className:string, index:number }>) {
   const [cellStyle, setCellStyle] = useState<cellSize>({});
   const [disabled, setDisabled] = useState<boolean>(false);
   const [cell, setCell] = useState<string>('');
@@ -15,11 +15,12 @@ export default function Square({ className }: Readonly<{className:string }>) {
   const cellElm = useRef<HTMLButtonElement>(null);
   const turn = useSelector((state: { ticTacToe: { turn: number } }) => state.ticTacToe.turn);
   const boardSize = useSelector((state: { ticTacToe: { boardSize: number } }) => state.ticTacToe.boardSize);
+  const game = useSelector((state: { ticTacToe: { game: number[] } }) => state.ticTacToe.game);
 
-  const onCellClick = () => {
+  const onCellClick = (index:number) => {
     setDisabled(true);
     setCell(turn % 2 === 0 ? 'X' : 'O');
-    store.dispatch({ type: 'ticTacToe/updateGame', payload: cell });
+    store.dispatch({ type: 'ticTacToe/updateGame', payload: index });
   }
 
   useEffect(() => {
@@ -27,11 +28,23 @@ export default function Square({ className }: Readonly<{className:string }>) {
     const height = cellElm.current?.clientWidth + 'px';
     const fontSize = (cellElm.current?.clientWidth || 0) / 2 + 'px';
     setCellStyle({ width, height, fontSize });
+    setDisabled(false);
+    setCell('');
   }, [boardSize]);
+
+  useEffect(() => {
+    if (game[index] === null) {
+      setDisabled(false);
+      setCell('');
+    } else {
+      setDisabled(true);
+      setCell(game[index] === 0 ? 'X' : 'O');
+    }
+  }, [game, index]);
 
   return (
     <button
-      onClick={onCellClick}
+      onClick={()=>onCellClick(index)}
       style={cellStyle}
       disabled={disabled}
       ref={cellElm}

@@ -20,11 +20,11 @@ export default function Board() {
   }, [boardSize, game]);
 
   return (
-    <div>
+    <div className="sm:w-2/3">
       <p className="mb-3">
         Next player: {currPlayer}
       </p>
-      <div className={`min-h-80 font-bold mx-auto mb-3 border border-gray-400`}>
+      <div className={`min-h-80 sm:min-h-64 font-bold mx-auto mb-3 border border-gray-400`}>
         {loading && <div>Loading...</div>}
         {gameArea.map((cols, i) => {
           const border_b = i === boardSize - 1 ? '' : 'border-b';
@@ -32,7 +32,7 @@ export default function Board() {
             <div className={`${border_b} border-gray-400 grid grid-cols-${boardSize}`} key={i}>
               {cols.map((_, j) => {
                 const border_r = j === boardSize - 1 ? '' : 'border-r';
-                return <Square key={j} className={`${border_r} border-gray-400 w-full`} />
+                return <Square key={j} className={`${border_r} border-gray-400 w-full`} index={i * boardSize + j} />
               })}
             </div>
           )

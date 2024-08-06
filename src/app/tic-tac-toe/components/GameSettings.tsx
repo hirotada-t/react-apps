@@ -19,7 +19,6 @@ export default function GameSettings() {
 
   const changeBoardSize = () => {
     store.dispatch({ type: 'ticTacToe/updateBoardSize', payload: value });
-    store.dispatch({ type: 'ticTacToe/resetGame' });
   }
   return (
     <Dialog>
