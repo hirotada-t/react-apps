@@ -14,6 +14,7 @@ export default function Square({ className }: Readonly<{className:string }>) {
 
   const cellElm = useRef<HTMLButtonElement>(null);
   const turn = useSelector((state: { ticTacToe: { turn: number } }) => state.ticTacToe.turn);
+  const boardSize = useSelector((state: { ticTacToe: { boardSize: number } }) => state.ticTacToe.boardSize);
 
   const onCellClick = () => {
     setDisabled(true);
@@ -26,7 +27,7 @@ export default function Square({ className }: Readonly<{className:string }>) {
     const height = cellElm.current?.clientWidth + 'px';
     const fontSize = (cellElm.current?.clientWidth || 0) / 2 + 'px';
     setCellStyle({ width, height, fontSize });
-  }, []);
+  }, [boardSize]);
 
   return (
     <button
