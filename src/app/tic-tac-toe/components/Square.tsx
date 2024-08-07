@@ -33,13 +33,11 @@ export default function Square({ className, index }: Readonly<{className:string,
   }, [boardSize]);
 
   useEffect(() => {
-    if (game[index] === null) {
-      setDisabled(false);
-      setCell('');
-    } else {
-      setDisabled(true);
-      setCell(game[index] === 0 ? 'X' : 'O');
-    }
+    setDisabled(game[index] !== null);
+
+    if (game[index] === null) setCell('');
+    else setCell(game[index] === 0 ? 'X' : 'O');
+    
   }, [game, index]);
 
   return (

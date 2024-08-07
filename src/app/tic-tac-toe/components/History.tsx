@@ -17,7 +17,7 @@ export default function History() {
           {history.map((_, index) => (
             <li className="mb-1" key={index}>
               <button onClick={() => { jumpTo(index) }} className="bg-slate-200 rounded-md px-3 border border-black">
-                {index === 0 ? 'Go to game start' : `Go to move #${index}`}
+                {index === 0 ? 'Go to game start' : `Go to move #${index+1}`}
               </button>
             </li>
           ))
