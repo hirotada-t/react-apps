@@ -18,6 +18,7 @@ export default function Square({ className, index }: Readonly<{ className: strin
   const boardSize = useSelector((state: { ticTacToe: { boardSize: number } }) => state.ticTacToe.boardSize);
   const game = useSelector((state: { ticTacToe: { game: GameResultArr } }) => state.ticTacToe.game);
   const history = useSelector((state: { ticTacToe: { history: number[] } }) => state.ticTacToe.history);
+  const judgeCount = useSelector((state: { ticTacToe: { judgeCount: number } }) => state.ticTacToe.judgeCount);
   const turn = useSelector((state: { ticTacToe: { turn: number } }) => state.ticTacToe.turn);
 
   const onCellClick = (index: number) => {
@@ -25,7 +26,7 @@ export default function Square({ className, index }: Readonly<{ className: strin
     setCell(turn % 2 === 0 ? 'X' : 'O');
     store.dispatch({ type: 'ticTacToe/updateGame', payload: index });
   }
-  
+
   useEffect(() => {
     const width = '100%';
     const height = cellElm.current?.clientWidth + 'px';
@@ -34,17 +35,17 @@ export default function Square({ className, index }: Readonly<{ className: strin
     setClicked(false);
     setCell('');
   }, [boardSize]);
-  
+
   useEffect(() => {
     setClicked(game[index] !== null);
-    
+
     if (game[index] === null) setCell('');
     else setCell(game[index] === 0 ? 'X' : 'O');
-    if ((history[history.length - 1] === index) && gameEnd(game, index)) {
+    if ((history[history.length - 1] === index) && gameEnd(game, index, judgeCount)) {
       alert('Game Over');
     }
 
-  }, [game, index, history]);
+  }, [game, index, history, judgeCount]);
 
   return (
     <button

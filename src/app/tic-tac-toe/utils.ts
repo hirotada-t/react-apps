@@ -1,6 +1,6 @@
 import { GameCell, GameResultArr } from "./types";
 
-export const gameEnd = (game: GameResultArr, index: number, judgeCount = 3): boolean => {
+export const gameEnd = (game: GameResultArr, index: number, judgeCount:number): boolean => {
   const player = game[index];
   const boardSize = Math.sqrt(game.length);
   const x = index % boardSize;

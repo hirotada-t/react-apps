@@ -15,11 +15,14 @@ import { BOARD_SIZE_OPTIONS } from "../constant"
 import { useState } from "react"
 
 export default function GameSettings() {
-  const [value, setValue] = useState<number>(3);
+  const [boardSize, setBoardSize] = useState<number>(3);
+  const [judgeCount, setJudgeCount] = useState<number>(3);
 
-  const changeBoardSize = () => {
-    store.dispatch({ type: 'ticTacToe/updateBoardSize', payload: value });
+  const changeSettings = () => {
+    store.dispatch({ type: 'ticTacToe/updateBoardSize', payload: boardSize });
+    store.dispatch({ type: 'ticTacToe/updateJudgeCount', payload: judgeCount });
   }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -33,7 +36,7 @@ export default function GameSettings() {
           <Label className="col-span-4 sm:col-span-1">
             Board Size
           </Label>
-          <Select onValueChange={(v)=>setValue(Number(v))}>
+          <Select onValueChange={(v)=>setBoardSize(Number(v))}>
             <SelectTrigger className="col-span-4 sm:col-span-3">
               <SelectValue placeholder="Change board size (default=3)" />
             </SelectTrigger>
@@ -46,10 +49,26 @@ export default function GameSettings() {
               }
             </SelectContent>
           </Select>
+          <Label className="col-span-4 sm:col-span-1">
+            Win Conditions
+          </Label>
+          <Select onValueChange={(v)=>setJudgeCount(Number(v))}>
+            <SelectTrigger className="col-span-4 sm:col-span-3">
+              <SelectValue placeholder="Change win num (default=3)" />
+            </SelectTrigger>
+            <SelectContent>
+              {[...Array(boardSize - 2)].map((_, i) => i + 3).map((item, j) => (
+                <SelectItem key={j} value={(item).toString()}>
+                  {item}
+                </SelectItem>
+              ))
+              }
+            </SelectContent>
+          </Select>
         </div>
         <DialogFooter>
           <DialogClose asChild>
-            <Button type="button" onClick={changeBoardSize}>
+            <Button type="button" onClick={changeSettings}>
               Save changes
             </Button>
           </DialogClose>
