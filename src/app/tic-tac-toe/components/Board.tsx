@@ -8,9 +8,9 @@ export default function Board() {
   const [loading, setLoading] = useState(true);
   const [gameArea, setGameArea] = useState<GameCell[][]>([]);
 
+  const boardSize = useSelector((state: { ticTacToe: { boardSize: number } }) => state.ticTacToe.boardSize);
   const game = useSelector((state: { ticTacToe: { game: GameResultArr } }) => state.ticTacToe.game);
   const turn = useSelector((state: { ticTacToe: { turn: number } }) => state.ticTacToe.turn);
-  const boardSize = useSelector((state: { ticTacToe: { boardSize: number } }) => state.ticTacToe.boardSize);
   const currPlayer = PLAYERS[turn % 2];
 
   useEffect(() => {

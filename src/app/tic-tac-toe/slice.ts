@@ -21,13 +21,16 @@ const ticTacToeSlice = createSlice({
     jumpTo: (state, action) => {
       const step = action.payload;
       state.game = state.history[step];
+      state.turn = step + 1;
     },
     updateGame: (state, action) => {
+      const game = state.game.slice();
+      const history = state.history.slice();
       const index = action.payload;
       const turn = state.turn;
-      const game = state.game.slice();
-      game[index] = turn % 2 as GameCell;
-      const history = state.history.slice();
+
+      game[index] = turn % 2 as GameCell; // クリックしたマスの位置でgameを更新
+      if (history[turn]) history.splice(turn); // 履歴を確認中に新しい手を打つと以降の履歴を削除
 
       state.turn = turn + 1;
       state.game = game;
