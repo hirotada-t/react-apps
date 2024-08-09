@@ -2,19 +2,33 @@ import { useSelector } from "react-redux";
 import { PLAYERS } from "../constant";
 import { GameCell, GameResultArr } from "../types";
 import Square from "./Square";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Spinner } from "@/components/ui/spinner";
+
+const initGameArea = (boardSize: number): GameCell[][] => {
+  const arr: GameCell[][] = [];
+  for (let i = 0; i < boardSize; i++) {
+    arr.push(new Array(boardSize).fill(null));
+  }
+  return arr;
+}
 
 export default function Board() {
   const [loading, setLoading] = useState(true);
-  const [gameArea, setGameArea] = useState<GameCell[][]>([]);
+  const [gameArea, setGameArea] = useState<GameCell[][]>(initGameArea(3));
+  const [fontSize, setFontSize] = useState({});
 
   const boardSize = useSelector((state: { ticTacToe: { boardSize: number } }) => state.ticTacToe.boardSize);
   const game = useSelector((state: { ticTacToe: { game: GameResultArr } }) => state.ticTacToe.game);
   const turn = useSelector((state: { ticTacToe: { turn: number } }) => state.ticTacToe.turn);
+  const boardElm = useRef<HTMLDivElement>(null);
   const currPlayer = PLAYERS[turn % 2];
 
   useEffect(() => {
-    const array = game.flatMap((_, i, arr) => (i % boardSize === 0 ? [arr.slice(i, i + boardSize)] : []));
+    const array = initGameArea(boardSize);
+    const fontSize = (boardElm.current?.clientWidth || 0) / (2 * boardSize) + 'px';
+
+    setFontSize({ fontSize });
     setGameArea(array);
     setLoading(false);
   }, [boardSize, game]);
@@ -24,8 +38,13 @@ export default function Board() {
       <p className="mb-3">
         Next player: {currPlayer}
       </p>
-      <div className={`min-h-80 sm:min-h-64 font-bold mx-auto mb-3 border border-gray-400`}>
-        {loading && <div>Loading...</div>}
+      <div className={`relative min-h-80 sm:min-h-64 font-bold mx-auto mb-3 border border-gray-400`} ref={boardElm} style={fontSize}>
+        {loading &&
+          <div className="absolute top-0 w-full h-full bg-gray-200 bg-opacity-40 flex flex-col justify-center items-center">
+            準備中...
+            <Spinner size="large" />
+          </div>
+        }
         {gameArea.map((cols, i) => {
           const border_b = i === boardSize - 1 ? '' : 'border-b';
           return (
