@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import ticTacToeReducer from "./tic-tac-toe/slice";
+import settingsReducer from "./slice";
 
 const store = configureStore({
   reducer: {
     ticTacToe: ticTacToeReducer,
+    settings: settingsReducer,
   },
 });
 
