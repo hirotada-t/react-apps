@@ -24,56 +24,58 @@ export default function GameSettings() {
   }
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline">Game Settings</Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] w-11/12">
-        <DialogHeader>
-          <DialogTitle>Edit Board</DialogTitle>
-        </DialogHeader>
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label className="col-span-4 sm:col-span-1">
-            Board Size
-          </Label>
-          <Select onValueChange={(v)=>setBoardSize(Number(v))}>
-            <SelectTrigger className="col-span-4 sm:col-span-3">
-              <SelectValue placeholder="Change board size (default=3)" />
-            </SelectTrigger>
-            <SelectContent>
-              {BOARD_SIZE_OPTIONS.map((item, i) => (
-                <SelectItem key={i} value={(item).toString()}>
-                  {item}x{item}
-                </SelectItem>
-              ))
-              }
-            </SelectContent>
-          </Select>
-          <Label className="col-span-4 sm:col-span-1">
-            Win Conditions
-          </Label>
-          <Select onValueChange={(v)=>setJudgeCount(Number(v))}>
-            <SelectTrigger className="col-span-4 sm:col-span-3">
-              <SelectValue placeholder="Change win num (default=3)" />
-            </SelectTrigger>
-            <SelectContent>
-              {[...Array(boardSize - 2)].map((_, i) => i + 3).map((item, j) => (
-                <SelectItem key={j} value={(item).toString()}>
-                  {item}
-                </SelectItem>
-              ))
-              }
-            </SelectContent>
-          </Select>
-        </div>
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button type="button" onClick={changeSettings}>
-              Save changes
-            </Button>
-          </DialogClose>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <div className="py-5">
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="outline" className="bg-blue-700">Game Settings</Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px] w-11/12">
+          <DialogHeader>
+            <DialogTitle>Edit Board</DialogTitle>
+          </DialogHeader>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label className="col-span-4 sm:col-span-1">
+              Board Size
+            </Label>
+            <Select onValueChange={(v) => setBoardSize(Number(v))}>
+              <SelectTrigger className="col-span-4 sm:col-span-3">
+                <SelectValue placeholder="Change board size (default=3)" />
+              </SelectTrigger>
+              <SelectContent>
+                {BOARD_SIZE_OPTIONS.map((item, i) => (
+                  <SelectItem key={i} value={(item).toString()}>
+                    {item}x{item}
+                  </SelectItem>
+                ))
+                }
+              </SelectContent>
+            </Select>
+            <Label className="col-span-4 sm:col-span-1">
+              Win Conditions
+            </Label>
+            <Select onValueChange={(v) => setJudgeCount(Number(v))}>
+              <SelectTrigger className="col-span-4 sm:col-span-3">
+                <SelectValue placeholder="Change win num (default=3)" />
+              </SelectTrigger>
+              <SelectContent>
+                {[...Array(boardSize - 2)].map((_, i) => i + 3).map((item, j) => (
+                  <SelectItem key={j} value={(item).toString()}>
+                    {item}
+                  </SelectItem>
+                ))
+                }
+              </SelectContent>
+            </Select>
+          </div>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button type="button" onClick={changeSettings}>
+                Save changes
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </div>
   )
 }

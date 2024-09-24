@@ -11,12 +11,12 @@ export default function History() {
   };
 
   return (
-    <div className="sm:w-1/3 max-h-36 sm:max-h-[60vh] min-h-36 sm:min-h-none overflow-y-auto bg-slate-50 rounded-lg">
-      <div className="flex justify-center border-t sm:border-none py-3 sm:p-5">
-        <ol className="list-decimal flex flex-col-reverse">
+    <div className="w-full sm:max-w-48 sm:px-4 max-h-36 sm:max-h-[60vh] min-h-36 overflow-y-auto bg-slate-50 dark:bg-slate-500 rounded-lg">
+      <div className="flex justify-center border-t sm:border-none py-3 ">
+        <ol className="flex flex-col-reverse">
           {history.map((_, index) => (
             <li className="mb-1" key={index}>
-              <button onClick={() => { jumpTo(index) }} className="bg-slate-200 rounded-md px-3 border border-black">
+              <button onClick={() => { jumpTo(index) }} className="bg-slate-600 rounded-md px-2 border border-black min-w-36">
                 {index === 0 ? 'Go to game start' : `Go to move #${index+1}`}
               </button>
             </li>
