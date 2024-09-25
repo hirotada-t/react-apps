@@ -1,8 +1,7 @@
-import store from "@/app/store";
-import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { useEffect, useState } from "react";
 import { gameEnd } from "../utils";
-import { GameResultArr } from "../types";
+import { updateGame } from "@/store/tic-tac-toe/slice";
 
 const cellStyle = {
   width: '100%',
@@ -12,16 +11,17 @@ const cellStyle = {
 export default function Square({ className, index }: Readonly<{ className: string, index: number }>) {
   const [clicked, setClicked] = useState<boolean>(false);
   const [cell, setCell] = useState<string>('');
+  const dispatch = useAppDispatch();
 
-  const game = useSelector((state: { ticTacToe: { game: GameResultArr } }) => state.ticTacToe.game);
-  const history = useSelector((state: { ticTacToe: { history: number[] } }) => state.ticTacToe.history);
-  const judgeCount = useSelector((state: { ticTacToe: { judgeCount: number } }) => state.ticTacToe.judgeCount);
-  const turn = useSelector((state: { ticTacToe: { turn: number } }) => state.ticTacToe.turn);
+  const game = useAppSelector((state) => state.ticTacToe.game)
+  const history = useAppSelector((state) => state.ticTacToe.history)
+  const judgeCount = useAppSelector((state) => state.ticTacToe.judgeCount)
+  const turn = useAppSelector((state) => state.ticTacToe.turn)
 
   const onCellClick = (index: number) => {
     setClicked(true);
     setCell(turn % 2 === 0 ? 'X' : 'O');
-    store.dispatch({ type: 'ticTacToe/updateGame', payload: index });
+    dispatch(updateGame(index))
   }
 
   useEffect(() => {

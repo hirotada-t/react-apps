@@ -1,28 +1,38 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { GameCell, GameResultArr } from "./types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { GameCell, GameResultArr } from "@/app/tic-tac-toe/types";
+
+interface TicTacToeState {
+  boardSize: number
+  game: GameResultArr
+  history: number[]
+  turn: number
+  judgeCount: number
+}
+
+const initialState: TicTacToeState = {
+  boardSize: 3,
+  game: Array(9).fill(null),
+  history: [],
+  turn: 0,
+  judgeCount: 3,
+}
 
 const ticTacToeSlice = createSlice({
   name: "ticTacToe",
-  initialState: {
-    boardSize: 3,
-    game: <GameResultArr>Array(9).fill(null),
-    history: <number[]>[],
-    turn: 0,
-    judgeCount: 3,
-  },
+  initialState,
   reducers: {
-    updateBoardSize: (state, action) => {
+    updateBoardSize: (state, action:PayloadAction<number>) => {
       state.boardSize = action.payload;
       state.game = Array(state.boardSize ** 2).fill(null);
       state.history = [];
       state.turn = 0;
     },
-    updateJudgeCount: (state, action) => {
+    updateJudgeCount: (state, action:PayloadAction<number>) => {
       state.judgeCount = action.payload;
     },
     resetGame: (state) => {
     },
-    jumpTo: (state, action) => {
+    jumpTo: (state, action: PayloadAction<number>) => {
       const step = action.payload;
       const history = state.history.slice(0, step + 1);
       state.game = Array(state.boardSize ** 2).fill(null);
@@ -31,7 +41,7 @@ const ticTacToeSlice = createSlice({
       });
       state.turn = step + 1;
     },
-    updateGame: (state, action) => {
+    updateGame: (state, action:PayloadAction<number>) => {
       const game = state.game.slice();
       const history = state.history.slice();
       const index = action.payload;
@@ -47,8 +57,8 @@ const ticTacToeSlice = createSlice({
   },
 });
 
-// export const { makeMove } = ticTacToeSlice.actions;
-
-// export const selectSquares = (state) => state.ticTacToe.squares;
+export const { 
+  updateBoardSize, updateJudgeCount, resetGame, jumpTo, updateGame
+} = ticTacToeSlice.actions;
 
 export default ticTacToeSlice.reducer;

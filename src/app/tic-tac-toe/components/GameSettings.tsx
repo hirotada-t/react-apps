@@ -1,4 +1,3 @@
-import store from "@/app/store"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -13,14 +12,17 @@ import { Label } from "@/components/ui/label"
 import { SelectContent, SelectItem, SelectTrigger, SelectValue, Select } from "@/components/ui/select"
 import { BOARD_SIZE_OPTIONS } from "../constant"
 import { useState } from "react"
+import { useAppDispatch } from "@/store"
+import { updateBoardSize, updateJudgeCount } from "@/store/tic-tac-toe/slice"
 
 export default function GameSettings() {
   const [boardSize, setBoardSize] = useState<number>(3);
   const [judgeCount, setJudgeCount] = useState<number>(3);
+  const dispatch = useAppDispatch();
 
   const changeSettings = () => {
-    store.dispatch({ type: 'ticTacToe/updateBoardSize', payload: boardSize });
-    store.dispatch({ type: 'ticTacToe/updateJudgeCount', payload: judgeCount });
+    dispatch(updateBoardSize(boardSize));
+    dispatch(updateJudgeCount(judgeCount));
   }
 
   return (

@@ -1,9 +1,9 @@
-import { useSelector } from "react-redux";
 import { PLAYERS } from "../constant";
-import { GameCell, GameResultArr } from "../types";
+import { GameCell } from "../types";
 import Square from "./Square";
 import { useEffect, useRef, useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
+import { useAppSelector } from "@/store";
 
 const initGameArea = (boardSize: number): GameCell[][] => {
   const arr: GameCell[][] = [];
@@ -18,9 +18,10 @@ export default function Board() {
   const [gameArea, setGameArea] = useState<GameCell[][]>(initGameArea(3));
   const [fontSize, setFontSize] = useState({});
 
-  const boardSize = useSelector((state: { ticTacToe: { boardSize: number } }) => state.ticTacToe.boardSize);
-  const game = useSelector((state: { ticTacToe: { game: GameResultArr } }) => state.ticTacToe.game);
-  const turn = useSelector((state: { ticTacToe: { turn: number } }) => state.ticTacToe.turn);
+  const boardSize = useAppSelector((state) => state.ticTacToe.boardSize)
+  const game = useAppSelector((state) => state.ticTacToe.game)
+  const turn = useAppSelector((state) => state.ticTacToe.turn)
+
   const boardElm = useRef<HTMLDivElement>(null);
   const currPlayer = PLAYERS[turn % 2];
 

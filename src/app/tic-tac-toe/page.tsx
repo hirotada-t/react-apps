@@ -3,8 +3,8 @@
 import { Provider } from "react-redux";
 import Board from "./components/Board";
 import GameSettings from "./components/GameSettings";
-import store from "../store";
 import History from "./components/History";
+import store from "@/store"
 
 export default function Home() {
 
