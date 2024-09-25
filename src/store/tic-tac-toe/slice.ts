@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GameCell, GameResultArr } from "@/app/tic-tac-toe/types";
+import { GameCell, GameResultArr } from "@/types/tic-tac-toe";
 
 interface TicTacToeState {
   boardSize: number

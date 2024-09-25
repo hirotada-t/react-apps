@@ -1,4 +1,4 @@
-import { GameCell, GameResultArr } from "./types";
+import { GameCell, GameResultArr } from "@/types/tic-tac-toe";
 
 export const gameEnd = (game: GameResultArr, index: number, judgeCount:number): boolean => {
   const player = game[index];

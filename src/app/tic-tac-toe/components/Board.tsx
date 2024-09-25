@@ -1,5 +1,5 @@
 import { PLAYERS } from "../constant";
-import { GameCell } from "../types";
+import { GameCell } from "@/types/tic-tac-toe";
 import Square from "./Square";
 import { useEffect, useRef, useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
